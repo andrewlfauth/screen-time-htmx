@@ -1,0 +1,14 @@
+---
+import Layout from "../Layout.astro";
+import Card from "../components/Card.astro";
+import { filterShowsByCategoryAndAge } from '../lib/filterShows'
+
+const params = Astro.url.searchParams
+const focuses = params.getAll('focus').flatMap(focus => focus.split(','))
+const ages = params.getAll('age').flatMap(age => age.split(','))
+const filteredShows = filterShowsByCategoryAndAge(focuses, ages)
+---
+
+<Layout>
+  {filteredShows.map(show => <Card title={show.title} description={show.description} focuses={show.focuses} ages={show.ages} image={show.image} />)}
+</Layout>

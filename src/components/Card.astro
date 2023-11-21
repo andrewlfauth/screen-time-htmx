@@ -1,0 +1,48 @@
+---
+import Heart from './Heart.astro'
+interface Props {
+  title: string
+  description: string
+  focuses: string[]
+  ages: number[]
+  image:string
+}
+
+const {title, description, focuses, ages, image} = Astro.props
+---
+
+<div x-data="{showInfo: false}" class="flex flex-col shadow rounded-t-md max-w-[300px] md:w-auto select-none">
+  <div class='relative max-w-sm'>
+    <img
+      src={image}
+      alt={title}
+      class='w-full aspect-auto rounded-t-md'
+    />
+    <div x-cloak class="w-full h-full bg-blue-800 bg-opacity-90 absolute top-0 left-0 duration-100 overflow-y-auto p-4 rounded-t-md" :class="showInfo ? '' : 'opacity-0'">
+      <p class="font-medium text-sm bg-blue-200 text-blue-900 rounded-md p-2">{description}</p>
+    </div>
+  </div>
+  <div class="bg-blue-800 px-2 py-2 rounded-b-md flex items-center justify-between">
+    
+    <button class="w-6 h-6 relative" @click="showInfo = !showInfo">
+      <img class="absolute top-1/2 -translate-y-1/2" :class="showInfo ? 'hidden' : ''" src="/info-icon.svg" alt="">
+      <img x-cloak class="absolute top-1/2 -translate-y-1/2" :class="showInfo ? '' : 'hidden'" src="/close-icon.svg" alt="">
+    </button>
+
+    <h3 class='relative flex items-center font-semibold tracking-tight text-white group cursor-help w-fit'>
+      <div class='absolute w-24 py-1 text-sm font-bold text-center text-black duration-100 delay-200 scale-75 bg-white rounded-full shadow opacity-0 pointer-events-none -top-12 group-hover:opacity-100 group-hover:scale-100 -left-3'>
+        <div class='w-2 h-2 bg-white absolute left-0 right-0 mx-auto rotate-45 -bottom-[4px]'></div>
+        Ages
+      </div>
+        {ages.join(', ')}
+    </h3>
+
+    <Heart />
+  </div>
+</div>
+
+<style>
+  [x-cloak] {
+    display: none !important;
+  }
+</style>
